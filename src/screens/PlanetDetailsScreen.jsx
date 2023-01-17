@@ -1,4 +1,4 @@
-import { View, StyleSheet, ScrollView, Pressable } from "react-native";
+import { View, StyleSheet, ScrollView, Pressable, Linking } from "react-native";
 import React from "react";
 import Text from "../components/text/Text";
 import PlanetHeader from "../components/PlanetHeader";
@@ -51,6 +51,10 @@ export default function PlanetDetailsScreen({ route }) {
         return <Text preset="h3">There is no Svg</Text>;
     }
   };
+
+  const onPressWiki = (wikiLink) => {
+    Linking.openURL(wikiLink);
+  };
   return (
     <SafeAreaView style={styles.container}>
       <PlanetHeader backBtn />
@@ -62,7 +66,10 @@ export default function PlanetDetailsScreen({ route }) {
             {planet?.name}
           </Text>
           <Text style={styles.description}>{planet?.description}</Text>
-          <Pressable style={styles.source}>
+          <Pressable
+            onPress={() => onPressWiki(planet?.wikiLink)}
+            style={styles.source}
+          >
             <Text>Source: </Text>
             <Text preset="h4" style={styles.wikipedia}>
               Wikipedia
@@ -70,7 +77,7 @@ export default function PlanetDetailsScreen({ route }) {
           </Pressable>
         </View>
 
-        <View style={{ marginTop: spacing[4] }}>
+        <View style={{ marginTop: spacing[4], marginBottom: spacing[2] }}>
           <PlanetContent title="Rotation Time" value={planet?.rotationTime} />
           <PlanetContent
             title="Revolution Time"
